@@ -30,6 +30,7 @@ class Login extends Component {
     const { userName, isButtonValid, isLoading } = this.state;
     return (
       <div data-testid="page-login">
+        <h2>Login</h2>
         {isLoading
           ? <Loading />
           : (

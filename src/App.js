@@ -4,7 +4,10 @@ import Routes from './components/Routes';
 class App extends React.Component {
   render() {
     return (
-      <Routes />
+      <>
+        <h1>TrybeTunes</h1>
+        <Routes />
+      </>
     );
   }
 }
