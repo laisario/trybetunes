@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import Props from 'prop-types';
 import Loading from '../components/Loading';
 import { createUser } from '../services/userAPI';
 
@@ -22,31 +22,45 @@ class Login extends Component {
     this.setState({ isLoading: true });
     await createUser({ name: userName });
     this.setState({ isLoading: false });
+    const { history } = this.props;
+    history.push('./search');
   };
 
   render() {
     const { userName, isButtonValid, isLoading } = this.state;
     return (
       <div data-testid="page-login">
-        <input
-          data-testid="login-name-input"
-          type="text"
-          placeholder="Seu nome"
-          value={ userName }
-          onChange={ this.hadleChangeInputName }
-        />
-        { isLoading ? <Loading /> : <Redirect to="./search" /> }
-        <button
-          data-testid="login-submit-button"
-          type="button"
-          disabled={ !isButtonValid }
-          onClick={ this.fetchUserApi }
-          name="button"
-        >
-          Entrar
-        </button>
+        {isLoading
+          ? <Loading />
+          : (
+            <form>
+              <input
+                data-testid="login-name-input"
+                type="text"
+                placeholder="Seu nome"
+                value={ userName }
+                onChange={ this.hadleChangeInputName }
+              />
+              <button
+                data-testid="login-submit-button"
+                type="button"
+                disabled={ !isButtonValid }
+                onClick={ this.fetchUserApi }
+                name="button"
+              >
+                Entrar
+              </button>
+            </form>
+          )}
       </div>
     );
   }
 }
+
+Login.propTypes = {
+  history: Props.shape({
+    push: Props.func,
+  }),
+}.isRequired;
+
 export default Login;
