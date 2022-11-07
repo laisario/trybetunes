@@ -29,6 +29,7 @@ const ContainerHeader = styled.header`
   height: 99vh;
   align-items: center;
   justify-content: space-between;
+  background-color: #fff;
 `;
 
 const ContainerLinks = styled.div`

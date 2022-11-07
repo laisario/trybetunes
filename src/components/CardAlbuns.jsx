@@ -20,7 +20,6 @@ const Thumbnail = styled.img`
 const AlbumTitle = styled.h3`
   width: 147px;
   height: 18px;
-  left: calc(50% - 147px/2 - 239.5px);
   font-family: 'Epilogue';
   font-style: normal;
   font-weight: 700;
@@ -32,7 +31,6 @@ const AlbumTitle = styled.h3`
 const ArtistName = styled.p`
   width: 147px;
   height: 14px;
-  left: calc(50% - 147px/2 - 239.5px);
   font-family: 'Epilogue';
   font-style: normal;
   font-weight: 400;
