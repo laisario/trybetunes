@@ -5,6 +5,7 @@ import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
 import background from '../assets/background.png';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 
 const ScrollableContainer = styled.div`
   margin-left: 32%;
@@ -77,8 +78,24 @@ class Album extends Component {
     this.setState({ musics: responseGetMusics });
   };
 
+  saveSong = async () => {
+    const { objMusic } = this.props;
+    this.setState({
+      isLoading: true,
+    });
+    await addSong(objMusic);
+    this.setState({
+      isLoading: false,
+    });
+  };
+
+  isChecked = async (music) => {
+    const favoriteSongs = await getFavoriteSongs();
+    return favoriteSongs.includes(music.trackId);
+  };
+
   render() {
-    const { musics } = this.state;
+    const { musics, isLoading } = this.state;
     return (
       <Container row data-testid="page-album">
         <Header />
@@ -106,7 +123,10 @@ class Album extends Component {
               .map((music) => (
                 <MusicCard
                   objMusic={ music }
+                  addSong={ this.saveSong }
                   key={ music.trackId }
+                  isLoading={ isLoading }
+                  isChecked={ this.isChecked(music) }
                 />))}
           </ScrollableContainer>
         </Container>
