@@ -103,11 +103,10 @@ class Album extends Component {
           </ContainerHeader>
           <ScrollableContainer>
             {musics.slice(1)
-              .map(({ trackName, previewUrl, trackId }) => (
+              .map((music) => (
                 <MusicCard
-                  musicName={ trackName }
-                  previewMusic={ previewUrl }
-                  key={ trackId }
+                  objMusic={ music }
+                  key={ music.trackId }
                 />))}
           </ScrollableContainer>
         </Container>

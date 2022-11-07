@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Props from 'prop-types';
 import styled from 'styled-components';
+import { addSong } from '../services/favoriteSongsAPI';
+import Loading from './Loading';
 
 const Container = styled.div`
   display: flex;
@@ -27,16 +29,53 @@ const Audio = styled.audio`
   }
 `;
 
+const FavoriteSong = styled.input``;
+
+const FavoriteSongContainer = styled.label``;
+
 export default class MusicCard extends Component {
+  state = {
+    isLoading: false,
+    isChecked: false,
+  };
+
+  saveSong = async () => {
+    const { objMusic } = this.props;
+    console.log(objMusic);
+    this.setState({ isLoading: true });
+    await addSong(objMusic);
+    this.setState({
+      isLoading: false,
+      isChecked: true,
+    });
+  };
+
   render() {
-    const { musicName, previewMusic } = this.props;
+    const { objMusic } = this.props;
+    const { musicName, previewMusic, trackId } = objMusic;
+    const { isLoading, isChecked } = this.state;
     return (
-      <Container row>
-        <SongName>{musicName}</SongName>
-        <Audio data-testid="audio-component" src={ previewMusic } controls>
-          <track kind="captions" />
-        </Audio>
-      </Container>
+      <div>
+        {isLoading
+          ? <Loading />
+          : (
+            <Container row>
+              <SongName>{musicName}</SongName>
+              <Audio data-testid="audio-component" src={ previewMusic } controls>
+                <track kind="captions" />
+              </Audio>
+              <FavoriteSongContainer>
+                Favorita
+                <FavoriteSong
+                  type="checkbox"
+                  data-testid={ `checkbox-music-${trackId}` }
+                  onChange={ this.saveSong }
+                  checked={ isChecked }
+                />
+              </FavoriteSongContainer>
+            </Container>
+          )}
+      </div>
     );
   }
 }
