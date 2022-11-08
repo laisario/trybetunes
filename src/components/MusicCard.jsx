@@ -32,36 +32,44 @@ const FavoriteSong = styled.input``;
 
 const FavoriteSongContainer = styled.label``;
 
-export default class MusicCard extends Component {
+class MusicCard extends Component {
   render() {
-    const { objMusic, addSong, isLoading, isChecked } = this.props;
-    const { musicName, previewMusic, trackId } = objMusic;
+    const { music, addSong, deleteSong, isLoading, isChecked } = this.props;
+    const { trackName, previewUrl, trackId } = music;
+
     return (
       <div>
-        {isLoading
-          ? <Loading />
-          : (
-            <Container row>
-              <SongName>{musicName}</SongName>
-              <Audio data-testid="audio-component" src={ previewMusic } controls>
-                <track kind="captions" />
-              </Audio>
-              <FavoriteSongContainer>
-                Favorita
-                <FavoriteSong
-                  type="checkbox"
-                  data-testid={ `checkbox-music-${trackId}` }
-                  onChange={ addSong }
-                  checked={ isChecked }
-                />
-              </FavoriteSongContainer>
-            </Container>
+        <Container row>
+          <SongName>{trackName}</SongName>
+          <Audio data-testid="audio-component" src={ previewUrl } controls>
+            <track kind="captions" />
+          </Audio>
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <FavoriteSongContainer>
+              Favorita
+              <FavoriteSong
+                type="checkbox"
+                data-testid={ `checkbox-music-${trackId}` }
+                onChange={ isChecked ? deleteSong : addSong }
+                checked={ isChecked }
+              />
+            </FavoriteSongContainer>
           )}
+        </Container>
       </div>
     );
   }
 }
+
 MusicCard.propTypes = {
-  musicName: Props.string,
+  objMusic: Props.shape({
+    trackName: Props.string,
+    previewUrl: Props.string,
+    trackId: Props.string,
+  }),
   previewMusic: Props.string,
 }.isRequired;
+
+export default MusicCard;

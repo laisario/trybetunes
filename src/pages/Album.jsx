@@ -66,6 +66,8 @@ const ArtistName = styled.h3`
 class Album extends Component {
   state = {
     musics: [],
+    favorites: [],
+    isLoading: [],
   };
 
   async componentDidMount() {
@@ -75,27 +77,40 @@ class Album extends Component {
   fetchMusicsApi = async () => {
     const { match: { params: { id } } } = this.props;
     const responseGetMusics = await getMusics(id);
-    this.setState({ musics: responseGetMusics });
-  };
-
-  saveSong = async () => {
-    const { objMusic } = this.props;
-    this.setState({
-      isLoading: true,
-    });
-    await addSong(objMusic);
-    this.setState({
-      isLoading: false,
-    });
-  };
-
-  isChecked = async (music) => {
     const favoriteSongs = await getFavoriteSongs();
-    return favoriteSongs.includes(music.trackId);
+    const favoriteSongsIds = favoriteSongs.map((song) => song.trackId);
+
+    this.setState({ musics: responseGetMusics, favorites: favoriteSongsIds });
+  };
+
+  saveSong = async (music) => {
+    this.setState((state) => ({
+      isLoading: [...state.isLoading, music.trackId],
+    }));
+    const result = await addSong(music);
+    if (result === 'OK') {
+      this.setState((state) => ({
+        favorites: [...state.favorites, music.trackId],
+        isLoading: state.isLoading.filter((songId) => songId !== music.trackId),
+      }));
+    }
+  };
+
+  deleteSong = async (music) => {
+    this.setState((state) => ({
+      isLoading: [...state.isLoading, music.trackId],
+    }));
+    const result = await removeSong(music);
+    if (result === 'OK') {
+      this.setState((state) => ({
+        favorites: state.favorites.filter((songId) => songId !== music.trackId),
+        isLoading: state.isLoading.filter((songId) => songId !== music.trackId),
+      }));
+    }
   };
 
   render() {
-    const { musics, isLoading } = this.state;
+    const { musics, isLoading, favorites } = this.state;
     return (
       <Container row data-testid="page-album">
         <Header />
@@ -122,11 +137,12 @@ class Album extends Component {
             {musics.slice(1)
               .map((music) => (
                 <MusicCard
-                  objMusic={ music }
-                  addSong={ this.saveSong }
                   key={ music.trackId }
-                  isLoading={ isLoading }
-                  isChecked={ this.isChecked(music) }
+                  music={ music }
+                  addSong={ () => this.saveSong(music) }
+                  deleteSong={ () => this.deleteSong(music) }
+                  isLoading={ isLoading.includes(music.trackId) }
+                  isChecked={ favorites.includes(music.trackId) }
                 />))}
           </ScrollableContainer>
         </Container>
