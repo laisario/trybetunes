@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import MusicCard from '../components/MusicCard';
 import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: ${({ row }) => (row ? 'row' : 'column')};
+`;
 
 class Favorites extends Component {
   state = {
@@ -45,21 +51,23 @@ class Favorites extends Component {
   render() {
     const { isLoading, favorites, favoritesIds } = this.state;
     return (
-      <div data-testid="page-favorites">
+      <Container row data-testid="page-favorites">
         <Header />
-        <h2>Favorite Songs</h2>
-        {isLoading
-          ? (<Loading />)
-          : (favorites
-            .map((music) => (
-              <MusicCard
-                key={ music.trackId }
-                music={ music }
-                deleteSong={ () => this.deleteSong(music) }
-                isLoading={ isLoading }
-                isChecked={ favoritesIds.includes(music.trackId) }
-              />)))}
-      </div>
+        <Container column>
+          <h2>Favorite Songs</h2>
+          {isLoading
+            ? (<Loading />)
+            : (favorites
+              .map((music) => (
+                <MusicCard
+                  key={ music.trackId }
+                  music={ music }
+                  deleteSong={ () => this.deleteSong(music) }
+                  isLoading={ isLoading }
+                  isChecked={ favoritesIds.includes(music.trackId) }
+                />)))}
+        </Container>
+      </Container>
     );
   }
 }
