@@ -72,7 +72,7 @@ class Login extends Component {
     await createUser({ name: userName });
     this.setState({ isLoading: false });
     const { history } = this.props;
-    history.push('./search');
+    history.push('./trybetunes/search');
   };
 
   render() {

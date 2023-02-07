@@ -87,7 +87,7 @@ class Header extends Component {
               <LinkIconContainer>
                 <LinkIcon src={ iconSearch } />
                 <Link
-                  to="/search"
+                  to="/trybetunes/search"
                   data-testid="link-to-search"
                 >
                   Pesquisar
@@ -96,7 +96,7 @@ class Header extends Component {
               <LinkIconContainer>
                 <LinkIcon src={ iconFavorite } />
                 <Link
-                  to="/favorites"
+                  to="/trybetunes/favorites"
                   data-testid="link-to-favorites"
                 >
                   Favoritas
@@ -105,7 +105,7 @@ class Header extends Component {
               <LinkIconContainer>
                 <LinkIcon src={ iconProfile } />
                 <Link
-                  to="/profile"
+                  to="/trybetunes/profile"
                   data-testid="link-to-profile"
                 >
                   Perfil
