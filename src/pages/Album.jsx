@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
-import background from '../assets/background.png';
 import { addSong, getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 
 const ScrollableContainer = styled.div`
@@ -16,13 +15,14 @@ const ScrollableContainer = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: ${({ row }) => (row ? 'row' : 'column')};
+  background-color: white;
 `;
 
 const ContainerHeader = styled.div`
   display: flex;
   flex-direction: row;
-  background-image: url(${background});
-  width: 80vw;
+  background-image: url('https://i.pinimg.com/originals/03/a8/cc/03a8ccd16233e6ab0c13c09ab0ec3575.jpg');
+  min-width: 85vw;
   height: 35vh;
   align-items: center;
   flex-wrap: nowrap;

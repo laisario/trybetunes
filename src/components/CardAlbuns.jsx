@@ -58,7 +58,7 @@ export default class CardAlbuns extends Component {
         </AlbumTitle>
         <ArtistName>{ artist }</ArtistName>
         <Link
-          to={ `/album/${collectionId}` }
+          to={ `/trybetunes/album/${collectionId}` }
           data-testid={ `link-to-album-${collectionId}` }
         >
           Página Album

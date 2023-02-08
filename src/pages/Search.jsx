@@ -4,7 +4,6 @@ import CardAlbuns from '../components/CardAlbuns';
 import Header from '../components/Header';
 import Loading from '../components/Loading';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
-import background from '../assets/background.png';
 
 const ContainerPage = styled.div`
   display: flex;
@@ -13,6 +12,7 @@ const ContainerPage = styled.div`
 
 const SearchInput = styled.input`
   background: rgba(255, 255, 255, 0.5);
+  border:  none;
   width: 400px;
   height: 40px;
   border-radius: 23px;
@@ -34,8 +34,7 @@ const SearchButton = styled.button`
 `;
 
 const SearchContainer = styled.form`
-  background-image: url(${background});
-  /* background-repeat: no-repeat; */
+  background-image: url('https://i.pinimg.com/originals/03/a8/cc/03a8ccd16233e6ab0c13c09ab0ec3575.jpg');
   background-attachment: fixed;
   background-position: left bottom;
   width: 85vw;
@@ -47,9 +46,7 @@ const SearchContainer = styled.form`
 `;
 
 const P = styled.p`
-  width: 400px;
-  height: 24.89px;
-  top: 297px;
+  margin: 50px 0;
   font-family: 'Epilogue';
   font-style: italic;
   font-weight: 300;
@@ -58,18 +55,52 @@ const P = styled.p`
   text-align: center;
   color: #003BE5;
 `;
+
 const Container = styled.div`
   display: flex;
   flex-direction: ${({ row }) => (row ? 'row' : 'column')};
-  overflow-x: scroll;
-  justify-content: space-between;
+  background-color: white;
 `;
+
+const ContainerButtons = styled.div`
+  display: flex;
+  flex-direction: ${({ row }) => (row ? 'row' : 'column')};
+  background-color: white;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10vh;
+`;
+
+const ContainerAlbuns = styled.div`
+  display: flex;
+  flex-direction: ${({ row }) => (row ? 'row' : 'column')};
+  justify-content: space-evenly;
+  background-color: white;
+`;
+
+const ButtonNext = styled.button`
+  background-color: #00D5E2;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: none;
+  margin-left: 10px;
+`;
+const ButtonPrev = styled.button`
+  background-color: #00D5E2;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  border: none;
+  margin-right: 10px;
+  `;
 
 class Search extends Component {
   state = {
     artistInput: '',
     artistSaved: '',
     isButtonValid: false,
+    page: 1,
   };
 
   handleInputChange = ({ target }) => {
@@ -93,7 +124,15 @@ class Search extends Component {
   };
 
   render() {
-    const { artistInput, isButtonValid, isLoading, artistSaved, albuns } = this.state;
+    const { artistInput,
+      isButtonValid,
+      isLoading, artistSaved, albuns, page } = this.state;
+
+    const pageSize = 4;
+    const albunsPerPage = albuns
+      ?.slice((page - 1) * pageSize, ((page - 1) * pageSize) + pageSize);
+
+    console.log('aaa', albunsPerPage);
     return (
       <ContainerPage data-testid="page-search">
         <Header />
@@ -117,16 +156,16 @@ class Search extends Component {
                   Pesquisar
                 </SearchButton>
               </SearchContainer>
-              {albuns
+              {albunsPerPage
               && (
-                <>
+                <Container>
                   <P>
                     {`Resultado de álbuns de:  
-                    ${artistSaved}`}
+                    ${artistSaved.toLocaleUpperCase()}`}
                   </P>
-                  <Container row>
-                    {albuns.length
-                      ? albuns
+                  <ContainerAlbuns row>
+                    {albunsPerPage.length
+                      ? albunsPerPage
                         .map(({
                           artworkUrl100,
                           collectionName,
@@ -140,8 +179,23 @@ class Search extends Component {
                           artist={ artistName }
                         />))
                       : <P>Nenhum álbum foi encontrado</P>}
-                  </Container>
-                </>
+                  </ContainerAlbuns>
+                  <ContainerButtons row>
+                    <ButtonPrev
+                      type="button"
+                      onClick={ () => this.setState({ page: page - 1 }) }
+                    >
+                      {'<'}
+                    </ButtonPrev>
+                    <span>{page}</span>
+                    <ButtonNext
+                      type="button"
+                      onClick={ () => this.setState({ page: page + 1 }) }
+                    >
+                      {'>'}
+                    </ButtonNext>
+                  </ContainerButtons>
+                </Container>
               )}
             </Container>
           )}

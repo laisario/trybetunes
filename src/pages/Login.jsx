@@ -7,19 +7,23 @@ import { createUser } from '../services/userAPI';
 import logo from '../assets/logo.svg';
 
 const Container = styled.div`
-  background: #FFFFFF;
-  box-shadow: 0px 0px 26px rgba(68, 73, 85, 0.2);
-  border-radius: 20px;
-  position: absolute;
-  top: 20%;
-  left: 18%;
-  padding: 75px 150px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const ContainerLogin = styled.div`
+  display: flex;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 26px rgba(68, 73, 85, 0.2);
+  border-radius: 20px;
+  padding: 75px 150px;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
-  min-width: 550px;
-  min-height: 250px;
+  max-width: 50vw;
 `;
 
 const InputName = styled.input`
@@ -72,36 +76,38 @@ class Login extends Component {
     await createUser({ name: userName });
     this.setState({ isLoading: false });
     const { history } = this.props;
-    history.push('./trybetunes/search');
+    history.push('/trybetunes/search');
   };
 
   render() {
     const { userName, isButtonValid, isLoading } = this.state;
     return (
       <Container data-testid="page-login">
-        <img src={ logo } alt="" />
-        {isLoading
-          ? <Loading />
-          : (
-            <>
-              <InputName
-                data-testid="login-name-input"
-                type="text"
-                placeholder="Qual é o seu nome?"
-                value={ userName }
-                onChange={ this.hadleChangeInputName }
-              />
-              <Button
-                data-testid="login-submit-button"
-                type="button"
-                disabled={ !isButtonValid }
-                onClick={ this.fetchUserApi }
-                name="button"
-              >
-                Entrar
-              </Button>
-            </>
-          )}
+        <ContainerLogin>
+          <img src={ logo } alt="" />
+          {isLoading
+            ? <Loading />
+            : (
+              <>
+                <InputName
+                  data-testid="login-name-input"
+                  type="text"
+                  placeholder="Qual é o seu nome?"
+                  value={ userName }
+                  onChange={ this.hadleChangeInputName }
+                />
+                <Button
+                  data-testid="login-submit-button"
+                  type="button"
+                  disabled={ !isButtonValid }
+                  onClick={ this.fetchUserApi }
+                  name="button"
+                >
+                  Entrar
+                </Button>
+              </>
+            )}
+        </ContainerLogin>
       </Container>
     );
   }

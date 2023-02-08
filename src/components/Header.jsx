@@ -7,26 +7,27 @@ import Loading from './Loading';
 import logo from '../assets/logo.svg';
 import iconSearch from '../assets/search.svg';
 import iconFavorite from '../assets/favorite.svg';
-import iconProfile from '../assets/profile.svg';
+// import iconProfile from '../assets/profile.svg';
 
 const Logo = styled.img`
   width: 100px;
   margin-top: 30px;
 `;
 const ContainerUserName = styled.div`
-  border: ${({ hasName }) => (hasName ? '1px solid #003BE5' : 'none')} ;
-  text-align: right;
+  border: ${({ hasName }) => (hasName ? '1px solid rgb(0, 59, 229)' : 'none')} ;
+  text-align: center;
   border-radius: 100px;
-  padding: 0 50px;
+  padding: 0 3%;
   margin-bottom: 15px;
+  max-width: 60%;
 `;
 const UserNameP = styled.p``;
 
 const ContainerHeader = styled.header`
   display: flex;
   flex-direction: column;
-  width: 25%;
-  height: 99vh;
+  min-width: 15vw;
+  min-height: 100vh;
   align-items: center;
   justify-content: space-between;
   background-color: #fff;
@@ -102,7 +103,7 @@ class Header extends Component {
                   Favoritas
                 </Link>
               </LinkIconContainer>
-              <LinkIconContainer>
+              {/* <LinkIconContainer>
                 <LinkIcon src={ iconProfile } />
                 <Link
                   to="/trybetunes/profile"
@@ -110,7 +111,7 @@ class Header extends Component {
                 >
                   Perfil
                 </Link>
-              </LinkIconContainer>
+              </LinkIconContainer> */}
             </>)}
         </ContainerLinks>
         <ContainerUserName hasName={ userName.name }>

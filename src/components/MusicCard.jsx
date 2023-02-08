@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import Props from 'prop-types';
 import styled from 'styled-components';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Loading from './Loading';
 
 const Container = styled.div`
   display: flex;
   flex-direction: ${({ row }) => (row ? 'row' : 'column')};
   border-bottom: 1px solid #CCD4E1;
-  width: 90%;
+  min-width: 50vw;
   padding-top: 20px;
   padding-bottom: 20px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 20px;
 `;
 
 const SongName = styled.p`
@@ -28,9 +31,10 @@ const Audio = styled.audio`
   }
 `;
 
-const FavoriteSong = styled.input``;
-
-const FavoriteSongContainer = styled.label``;
+const FavoriteSong = styled.button`
+  background: none;
+  border: none;
+`;
 
 class MusicCard extends Component {
   render() {
@@ -47,15 +51,17 @@ class MusicCard extends Component {
           {isLoading ? (
             <Loading />
           ) : (
-            <FavoriteSongContainer>
-              Favorita
-              <FavoriteSong
-                type="checkbox"
-                data-testid={ `checkbox-music-${trackId}` }
-                onChange={ isChecked ? deleteSong : addSong }
-                checked={ isChecked }
-              />
-            </FavoriteSongContainer>
+            <FavoriteSong
+              type="button"
+              data-testid={ `checkbox-music-${trackId}` }
+            >
+              {isChecked
+                ? <FavoriteIcon onClick={ isChecked ? deleteSong : addSong } />
+                : (
+                  <FavoriteBorderIcon
+                    onClick={ isChecked ? deleteSong : addSong }
+                  />)}
+            </FavoriteSong>
           )}
         </Container>
       </div>
