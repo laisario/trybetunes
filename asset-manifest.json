@@ -1,18 +1,16 @@
 {
   "files": {
-    "main.css": "/trybetunes/static/css/main.728fff24.css",
-    "main.js": "/trybetunes/static/js/main.7ef2e682.js",
-    "static/media/background.png": "/trybetunes/static/media/background.fd111416be511470a697.png",
+    "main.css": "/trybetunes/static/css/main.272703b6.css",
+    "main.js": "/trybetunes/static/js/main.0ff53fa6.js",
     "static/media/logo.svg": "/trybetunes/static/media/logo.c7c912c14bac76b71308c81ddedeafae.svg",
     "static/media/favorite.svg": "/trybetunes/static/media/favorite.0441cb0a11d30aa7e4cae7e2465b3329.svg",
     "index.html": "/trybetunes/index.html",
     "static/media/search.svg": "/trybetunes/static/media/search.71031f61dd32086c9868f4ca5bb9ae61.svg",
-    "static/media/profile.svg": "/trybetunes/static/media/profile.6c50604c99b2938c329a04d87d0ff67b.svg",
-    "main.728fff24.css.map": "/trybetunes/static/css/main.728fff24.css.map",
-    "main.7ef2e682.js.map": "/trybetunes/static/js/main.7ef2e682.js.map"
+    "main.272703b6.css.map": "/trybetunes/static/css/main.272703b6.css.map",
+    "main.0ff53fa6.js.map": "/trybetunes/static/js/main.0ff53fa6.js.map"
   },
   "entrypoints": [
-    "static/css/main.728fff24.css",
-    "static/js/main.7ef2e682.js"
+    "static/css/main.272703b6.css",
+    "static/js/main.0ff53fa6.js"
   ]
 }
